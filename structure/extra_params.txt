@@ -1,0 +1,29 @@
+#define NOADMIX 1
+#define LINKAGE 0
+#define USEPOPINFO 0
+#define GENSBACK 0
+
+#define LOCPRIOR 1
+#define LOCISPOP 1
+#define LOCPRIORINIT 1.0 //(d) initial value for r, the location prior
+#define MAXLOCPRIOR 100.0 //(d) max allowed value for r
+
+#define INFERALPHA 1
+#define ALPHA 1.0
+#define POPALPHAS 0
+#define UNIFPRIORALPHA 1
+#define ALPHAMAX 10.0
+#define ALPHAPROPSD 0.025
+
+#define FREQSCORR 1
+#define ONEFST 0
+#define FPRIORMEAN 0.01
+#define FPRIORSD 0.05
+#define INFERLAMBDA 0
+#define LAMBDA 1.0
+#define COMPUTEPROB 1
+#define PFROMPOPFLAGONLY 0
+#define ANCESTDIST 0
+#define STARTATPOPINFO 0
+#define METROFREQ 10
+#define UPDATEFREQ 5000

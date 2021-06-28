@@ -4,7 +4,7 @@
 setwd("Downloads/") # set the working directory to Downloads
 
 # install and load all of the packages we will be using
-install.packages(c("raster", "maptools", "rgdal", "maps", "usmap"))
+# install.packages(c("raster", "maptools", "rgdal", "maps", "usmap"))
 library(raster) 
 library(maptools)
 library(rgdal)
@@ -22,13 +22,13 @@ canada <- getData("GADM", country = "CAN", level = 1) # level = 1 provides provi
 usa <- getData("GADM", country = "USA", level = 1)
 
 # make lake objects 
-lakes <- readOGR("ne_10m_lakes") # file path to lake shapefile
+lakes <- readOGR("/Users/kbja10/Downloads/ne_10m_lakes") # file path to lake shapefile
 oneida <- subset(lakes, name=="Oneida Lake") # make object for Oneida Lake
 finger_lakes <- subset(lakes, name_alt=="Finger Lakes") # make object for Finger Lakes
 great_lakes <- subset(lakes, name_alt=="Great Lakes") # make object for Great Lakes
 
 # make the map and save it in your Downloads
-png(filename = "goby_sampling_sites_summer_2019.png", width = 10, height = 7.5, res = 300, units = "in")
+pdf(file = "/Users/kbja10/Downloads/goby_sampling_sites_summer_2019.pdf", width = 10, height = 7.5)
 plot(canada, border = "gray55", xlim = c(-89, -75), ylim = c(40.5, 47)) # plot Canada
 plot(usa, border = "gray55", add = TRUE) # plot USA
 plot(oneida, col = "slategray1", add = TRUE) # add Oneida Lake
