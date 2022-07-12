@@ -194,7 +194,11 @@ edna_read_freqs <- NULL
 # Combine reads from separate runs, keep triplicate samples per site separate
 # Begin loop
 j = 1 # individual locus indexed from "filenames"
+LminLmax <- data.frame()
 for (file in dataFiles) { # for the reads at each locus for all samples   file_mat <- file[,grep("e_", colnames(file))] # subset to tissue samples
+  LminLmax <- rbind(LminLmax,data.frame(locus=filenames[[j]],
+                   Lmin=min(nchar(file$alleleSequence)),
+                   Lmax=max(nchar(file$alleleSequence))))
   file_mat <- file[,grep("e_", colnames(file))] # subset to eDNA samples
   file_mat[file_mat<=2] <- 0
   colnames(file_mat) <- gsub(".*__", "", colnames(file_mat)) # remove duplicate sample names
@@ -220,6 +224,9 @@ for (file in dataFiles) { # for the reads at each locus for all samples   file_m
   edna_read_freqs <- rbind(edna_read_freqs, edna_read_freqs_temp)
   j=j+1
 }
+
+# min and max allele sizes for each locus
+# write.csv(LminLmax, "datasets/allele_sizes.csv")
 
 # Change "LSH" sites to "LHS"
 colnames(edna_read_counts) <- gsub("LSH", "LHS", colnames(edna_read_counts))
