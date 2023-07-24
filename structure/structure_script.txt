@@ -1,23 +1,31 @@
-# create directory for this output
-ssh kja68@cbsulogin3.tc.cornell.edu
-mkdir /home/kja68/round_goby_field/structure
-# use cyberduckie to move genotypes_edited.txt, main_params.txt, extra_params.txt to directory
+# Running STRUCTURE from the command line
+# Open genotypes_edited.txt in BBEdit, delete col names for first 2 columns, save as Unix Unicode (UTF-8) .txt file
+# Use cyberduckie to move genotypes_edited.txt, main_params.txt, extra_params.txt to directory
 
-ssh kja68@cbsumm01.biohpc.cornell.edu
+# Create directory for this output and copy relevant files to working directory
+mkdir /home/kja68/round_goby_field/structure
 mkdir /workdir/kja68/
 cd /workdir/kja68/
 cp /home/kja68/round_goby_field/structure/*.txt /workdir/kja68/
-cp /home/kja68/round_goby_field/structure/*.dat /workdir/kja68/
 
-# use screen to run in the background: a quick review below
-# to attach a new screen, type "screen" in terminal
-# detach screen: press Ctrl a d
-# reattach the screen: screen -d -r
-# View screen sessions: screen -ls
-# terminate a screen session: screen -X -S [session # you want to kill] kill
-
+# Run program on detached screen (~10 min. to complete K = 1:13)
 screen -S structure
-seq 2 5 | parallel -j 24 structure -K {} -m main_params.txt -e extra_params.txt -o output{}
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run1
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run2
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run3
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run4
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run5
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run6
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run7
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run8
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run9
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run10
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run11
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run12
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run13
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run14
+seq 1 13 | parallel -j 6 structure -K {} -m main_params.txt -e extra_params.txt -o output_k{}_run15
 
-# copy output to home directory
+
+# Copy output to home directory
 cp output* /home/kja68/round_goby_field/structure/

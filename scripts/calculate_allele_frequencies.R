@@ -48,12 +48,12 @@ colnames(locus_read_depth) <- filenames
 # Loop thru locus files to determine genotypes and read depth  
 j <-  1 # individual locus indexed from "filenames"
 allele_diff <- 0.2 # proportion between 1st and 2nd allele
-# Create matrix with total number of reads/haplotype <=1 as missing data
+LminLmax <- data.frame()# Create matrix with total number of reads/haplotype <=1 as missing data
 for (file in dataFiles) { # for the reads at each locus for all samples 
+  LminLmax <- rbind(LminLmax,data.frame(locus=filenames[[j]],
+                                        Lmin=min(nchar(file$alleleSequence)),
+                                        Lmax=max(nchar(file$alleleSequence))))
   file_mat <- file[,grep("_t_", colnames(file))] # subset to tissue samples
-  # colnames(file_mat) <- gsub(".*JBL7W.", "\\1", colnames(file_mat)) # remove sequence lane info from sample names
-  # colnames(file_mat) <- gsub("(\\d)[^0-9]+$", "\\1", colnames(file_mat)) # remove barcode info from sample names
-  # colnames(file_mat) <- gsub("\\.","_",colnames(file_mat)) # change . to _ 
   colnames(file_mat) <- gsub(".*__", "", colnames(file_mat)) # remove duplicate sample names
   file_mat <- data.frame(allele=1:nrow(file_mat), file_mat) # add haplotype column
   # file_mat <- data.frame(allele=file$Id, file_mat) # add haplotype column
@@ -74,6 +74,9 @@ for (file in dataFiles) { # for the reads at each locus for all samples
   }
   j=j+1
 }
+
+# min and max allele sizes for each locus
+# write.csv(LminLmax, "datasets/allele_sizes.csv", row.names=FALSE)
 
 # Convert genotype data.frame to a genind object
 # Add site codes to genotype matrix and reorder W to E
@@ -194,11 +197,7 @@ edna_read_freqs <- NULL
 # Combine reads from separate runs, keep triplicate samples per site separate
 # Begin loop
 j = 1 # individual locus indexed from "filenames"
-LminLmax <- data.frame()
 for (file in dataFiles) { # for the reads at each locus for all samples   file_mat <- file[,grep("e_", colnames(file))] # subset to tissue samples
-  LminLmax <- rbind(LminLmax,data.frame(locus=filenames[[j]],
-                   Lmin=min(nchar(file$alleleSequence)),
-                   Lmax=max(nchar(file$alleleSequence))))
   file_mat <- file[,grep("e_", colnames(file))] # subset to eDNA samples
   file_mat[file_mat<=2] <- 0
   colnames(file_mat) <- gsub(".*__", "", colnames(file_mat)) # remove duplicate sample names
@@ -224,9 +223,6 @@ for (file in dataFiles) { # for the reads at each locus for all samples   file_m
   edna_read_freqs <- rbind(edna_read_freqs, edna_read_freqs_temp)
   j=j+1
 }
-
-# min and max allele sizes for each locus
-# write.csv(LminLmax, "datasets/allele_sizes.csv")
 
 # Change "LSH" sites to "LHS"
 colnames(edna_read_counts) <- gsub("LSH", "LHS", colnames(edna_read_counts))

@@ -1,4 +1,4 @@
-#define NOADMIX 1
+#define NOADMIX 0
 #define LINKAGE 0
 #define USEPOPINFO 0
 #define GENSBACK 0

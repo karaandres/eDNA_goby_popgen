@@ -330,7 +330,7 @@ colnames(edna_allele_freqs)[1] <- "locus_allele"
 rownames(edna_allele_freqs) <- edna_allele_freqs[,1]
 edna_allele_freqs[is.na(edna_allele_freqs)] <- 0
 edna_allele_freqs <- edna_allele_freqs[rowSums(edna_allele_freqs[,4:16])>0,]
-nrow(edna_allele_freqs)
+nrow(edna_allele_freqs) # 543 alleles detected across all eDNA samples
 ncol(edna_allele_freqs)
 
 ### TOTAL ALLELES PER SITE 
